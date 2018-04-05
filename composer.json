@@ -1,0 +1,43 @@
+{
+    "name": "nilsenpaul/craft-sequentialedit",
+    "description": "This plugin lets you edit multiple elements (entries, assets, categories ...) in sequence, without being sent back to the index page each time you save your changes.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "sequential edit"
+    ],
+    "support": {
+        "docs": "https://github.com/nilsenpaul/craft-sequentialedit/blob/master/README.md",
+        "issues": "https://github.com/nilsenpaul/craft-sequentialedit/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paul Verheul",
+            "homepage": "https://nilsenpaul.nl"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "nilsenpaul\\sequentialedit\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Sequential Edit",
+        "handle": "sequential-edit",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/nilsenpaul/sequential-edit/master/CHANGELOG.md",
+        "components": {
+            "sequentialEditService": "nilsenpaul\\sequentialedit\\services\\SequentialEditService"
+        },
+        "class": "nilsenpaul\\sequentialedit\\SequentialEdit"
+    }
+}

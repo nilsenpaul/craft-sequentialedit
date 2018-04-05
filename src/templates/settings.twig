@@ -1,0 +1,29 @@
+{% import "_includes/forms" as forms %}
+
+{% set options = {
+    'craft\\elements\\Entry': 'Entries' |t('sequential-edit'),
+    'craft\\elements\\Category': 'Categories' |t('sequential-edit'),
+    'craft\\elements\\User': 'Users' |t('sequential-edit'),
+} %}
+
+{% if includeCommerce %}
+    {% set options = options |merge({
+        'craft\\commerce\\elements\\Product': 'Commerce products' |t('sequential-edit'),
+        'craft\\commerce\\elements\\Subscription': 'Commerce subscriptions' |t('sequential-edit'),
+    }) %}
+{% endif %}
+
+<div class="field">
+    <div class="heading">
+        <label>{{ 'Activate sequential editing on' |t('sequential-edit') }}:</label>
+        <div class="instructions">{{ 'Select one or more element types to activate sequential editing for.' |t('sequential-edit') }}</div>
+    </div>
+
+    {{ forms.checkboxGroup({
+        id: 'activeOnElementTypes',
+        name: 'activeOnElementTypes',
+        options: options,
+        values: settings['activeOnElementTypes']
+        })
+    }}
+</div>
