@@ -2,6 +2,8 @@
 
 This plugin lets you edit multiple elements (entries, assets, categories ...) in sequence, without being sent back to the index page each time you save your changes.
 
+![Screenvid](resources/sequential-edit.gif)
+
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0 or later.
