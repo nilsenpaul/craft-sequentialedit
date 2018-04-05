@@ -31,3 +31,5 @@ Use the plugin settings page to choose the element types you want to be able to 
 On the overview page of every (selected) element type (entries, categories, users, Commerce products or Commerce subscriptions), you can now select all elements you wish to edit, and select 'Edit in sequence' from the action dropdown. Now, if you hit the save button after editing, Sequential Edit will redirect you to the next element in your editing queue. This WILL save you time.
 
 Brought to you by [Paul Verheul](https://nilsenpaul.nl)
+
+Thanks to [nystudio107](https://github.com/nystudio107) for plugin scaffolding and various blog posts!
