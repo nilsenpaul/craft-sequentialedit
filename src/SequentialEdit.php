@@ -72,8 +72,9 @@ class SequentialEdit extends Plugin
 
                 $this->general->addIdsToQueue($remainingIds, $elementType);
 
-                $redirectUrl = str_replace('?' . $request->queryString, '', $request->url);
-                return $response->redirect($redirectUrl);
+                $redirectUrl = '/' . $request->fullPath;
+                return $response->redirect($redirectUrl)->send();
+                exit;
             }
 
             // Remove this session's queued item if this is not an edit action of any kind

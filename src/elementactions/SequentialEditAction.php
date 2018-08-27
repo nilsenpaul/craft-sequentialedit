@@ -74,7 +74,13 @@ class SequentialEditAction extends ElementAction
                 }
             });            
 
-            Craft.redirectTo(\$element.find('a').attr('href') + '?sequential-type=' + \$type + '&sequential-edits-remaining=' + \$remainingIds.join('|'));
+            var \$elementUrl = \$element.find('a').attr('href');
+
+            if (\$elementUrl.indexOf('?') === -1) {
+                Craft.redirectTo(\$element.find('a').attr('href') + '?sequential-type=' + \$type + '&sequential-edits-remaining=' + \$remainingIds.join('|'));
+            } else {
+                Craft.redirectTo(\$element.find('a').attr('href') + '&sequential-type=' + \$type + '&sequential-edits-remaining=' + \$remainingIds.join('|'));
+            }
         }
     });
 })();
