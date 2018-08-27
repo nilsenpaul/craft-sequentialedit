@@ -82,6 +82,7 @@ class SequentialEditService extends Component
                 'sessionId' => Craft::$app->session->id,
                 'siteId' => $event->sender->siteId,
             ])
+            ->andWhere(['not', ['elementId' => $event->sender->id]])
             ->orderBy(['order' => SORT_ASC])
             ->one();
 
