@@ -51,7 +51,7 @@ class SequentialEdit extends Plugin
 
         $request = Craft::$app->request;
         $response = Craft::$app->response;
-        if (!$request->isConsoleRequest && $request->isCpRequest) {
+        if ($this->isInstalled && !$request->isConsoleRequest && $request->isCpRequest) {
             foreach ($this->settings->activeOnElementTypes as $elementClassName) {
                 Event::on($elementClassName, Element::EVENT_REGISTER_ACTIONS, function(RegisterElementActionsEvent $event) {
                     array_splice($event->actions, 2, 0, SequentialEditAction::class);
