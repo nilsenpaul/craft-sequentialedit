@@ -51,6 +51,9 @@ class SequentialEdit extends Plugin
 
         $request = Craft::$app->request;
         $response = Craft::$app->response;
+        $actionTrigger = Craft::$app->getConfig()->getGeneral()->actionTrigger;
+    	$requestContainsActionTrigger = strpos($request->fullPath, $actionTrigger) !== false;
+
         if ($this->isInstalled && !$request->isConsoleRequest && $request->isCpRequest) {
             foreach ($this->settings->activeOnElementTypes as $elementClassName) {
                 Event::on($elementClassName, Element::EVENT_REGISTER_ACTIONS, function(RegisterElementActionsEvent $event) {
@@ -78,7 +81,7 @@ class SequentialEdit extends Plugin
             }
 
             // Remove this session's queued item if this is not an edit action of any kind
-            if ($request->isCpRequest && !$request->isAjax) {
+            if ($request->isCpRequest && !$request->isAjax && !$requestContainsActionTrigger) {
                 $this->general->destroyQueueOnAnythingButEdits();
             }
         }
