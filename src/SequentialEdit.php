@@ -50,6 +50,7 @@ class SequentialEdit extends Plugin
         ]);
 
         $request = Craft::$app->request;
+        $response = Craft::$app->response;
         if (!$request->isConsoleRequest && $request->isCpRequest) {
             foreach ($this->settings->activeOnElementTypes as $elementClassName) {
                 Event::on($elementClassName, Element::EVENT_REGISTER_ACTIONS, function(RegisterElementActionsEvent $event) {
@@ -72,11 +73,11 @@ class SequentialEdit extends Plugin
                 $this->general->addIdsToQueue($remainingIds, $elementType);
 
                 $redirectUrl = str_replace('?' . $request->queryString, '', $request->url);
-                return Craft::$app->response->redirect($redirectUrl);
+                return $response->redirect($redirectUrl);
             }
 
             // Remove this session's queued item if this is not an edit action of any kind
-            if (Craft::$app->request->isCpRequest) {
+            if ($request->isCpRequest && !$request->isAjax) {
                 $this->general->destroyQueueOnAnythingButEdits();
             }
         }
