@@ -52,7 +52,7 @@ class SequentialEdit extends Plugin
         $request = Craft::$app->request;
         $response = Craft::$app->response;
         $actionTrigger = Craft::$app->getConfig()->getGeneral()->actionTrigger;
-    	$requestContainsActionTrigger = strpos($request->fullPath, $actionTrigger) !== false;
+    	$requestContainsActionTrigger = isset($request->fullPath) && strpos($request->fullPath, $actionTrigger) !== false;
 
         if ($this->isInstalled && !$request->isConsoleRequest && $request->isCpRequest) {
             foreach ($this->settings->activeOnElementTypes as $elementClassName) {
