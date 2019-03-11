@@ -76,15 +76,8 @@ class SequentialEditService extends Component
      */
     public static function sendToNextQueuedItem(ModelEvent $event, $type)
     {
-        $nextRemainingItem = QueuedItem::find()
-            ->where([
-                'elementType' => $type,
-                'sessionId' => Craft::$app->session->id,
-                'siteId' => $event->sender->siteId,
-            ])
-            ->andWhere(['not', ['elementId' => $event->sender->id]])
-            ->orderBy(['order' => SORT_ASC])
-            ->one();
+        $remainingItems = self::getRemainingItemQuery($event->sender->siteId, $event->sender->id, $type);
+        $nextRemainingItem = $remainingItems->one();
 
         if ($nextRemainingItem) {
             $element = Craft::$app->elements->getElementById($nextRemainingItem->elementId, null, $nextRemainingItem->siteId);
@@ -161,5 +154,17 @@ class SequentialEditService extends Component
                     ])->execute();
             }
         }
+    }
+
+    public static function getRemainingItemQuery($siteId, $currentElementId, $type)
+    {
+        return QueuedItem::find()
+            ->where([
+                'elementType' => $type,
+                'sessionId' => Craft::$app->session->id,
+                'siteId' => $siteId,
+            ])
+            ->andWhere(['not', ['elementId' => $currentElementId]])
+            ->orderBy(['order' => SORT_ASC]);
     }
 }

@@ -27,6 +27,7 @@ use craft\events\RegisterElementActionsEvent;
 use craft\services\Plugins;
 
 use yii\base\Event;
+use yii\helpers\Html;
 
 /**
  * This main plugin file handles all default plugin functionality, and adds crucial event management
@@ -56,10 +57,12 @@ class SequentialEdit extends Plugin
 
         if ($this->isInstalled && !$request->isConsoleRequest && $request->isCpRequest) {
             foreach ($this->settings->activeOnElementTypes as $elementClassName) {
+                // Add element action
                 Event::on($elementClassName, Element::EVENT_REGISTER_ACTIONS, function(RegisterElementActionsEvent $event) {
                     array_splice($event->actions, 2, 0, SequentialEditAction::class);
                 });
 
+                // Listen to afterSave event, redirect user
                 Event::on($elementClassName, $elementClassName::EVENT_AFTER_SAVE, function(ModelEvent $event) use($elementClassName) {
                     if (!$event->isNew) {
                         $this->general->sendToNextQueuedItem($event, $elementClassName);
@@ -79,6 +82,19 @@ class SequentialEdit extends Plugin
                 return $response->redirect($redirectUrl)->send();
                 exit;
             }
+
+            // Register hook for edit details
+            Craft::$app->view->hook('cp.entries.edit.details', function(array &$context) {
+                return $this->displayHook('entry', $context);
+            });
+
+            Craft::$app->view->hook('cp.categories.edit.details', function(array &$context) {
+                return $this->displayHook('category', $context);
+            });
+
+            Craft::$app->view->hook('cp.users.edit.details', function(array &$context) {
+                return $this->displayHook('user', $context);
+            });
 
             // Remove this session's queued item if this is not an edit action of any kind
             if ($request->isCpRequest && !$request->isAjax && !$requestContainsActionTrigger) {
@@ -118,5 +134,49 @@ class SequentialEdit extends Plugin
                 'includeCommerce' => $commercePlugin !== null,
             ]
         );
+    }
+
+    protected function displayHook($type, $context)
+    {
+        $element = $context[$type];
+
+        if ($element) {
+            switch ($type) {
+                case 'entry':
+                    $elementType = 'craft\elements\Entry';
+                    $tString = '{n, plural, =1{entry} other{entries}}';
+                    break;
+                case 'category':
+                    $elementType = 'craft\elements\Category';
+                    $tString = '{n, plural, =1{category} other{categories}}';
+                    break;
+                case 'user':
+                    $elementType = 'craft\elements\User';
+                    $tString = '{n, plural, =1{user} other{users}}';
+                    break;
+            }
+
+            $remainingItems = $this->general->getRemainingItemQuery($element->siteId, $element->id, $elementType)->count();
+
+            if ($remainingItems > 0) {
+                return Html::tag(
+                    'div',
+                    Html::tag(
+                        'div',
+                        Html::tag('div', Craft::t('sequential-edit', 'Remaining'), ['class' => 'heading']) 
+                        . Html::tag('div', Html::tag('strong', $remainingItems . ' ' . Craft::t('sequential-edit', $tString, ['n' => $remainingItems])), ['class' => 'input']),
+                        [
+                            'class' => 'field',
+                        ]
+                    ),
+                    [
+                        'id' => 'sequential-edit',
+                        'class' => 'meta',
+                    ]
+                );
+            }
+        }
+
+        return '';
     }
 }
