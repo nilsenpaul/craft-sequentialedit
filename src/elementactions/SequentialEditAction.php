@@ -55,7 +55,7 @@ class SequentialEditAction extends ElementAction
         batch: true,
         validateSelection: function(\$selectedItems)
         {
-            return Garnish.hasAttr(\$selectedItems.find('.element'), 'data-editable');
+            return Garnish.hasAttr(\$selectedItems.find('.element'), 'data-id');
         },
         activate: function(\$selectedItems)
         {

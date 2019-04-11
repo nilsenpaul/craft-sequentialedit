@@ -13,6 +13,13 @@
     }) %}
 {% endif %}
 
+{% if includeCalendar %}
+    {% set options = options |merge({
+        'Solspace\\Calendar\\Elements\\Event': 'Solspace Calendar events' |t('sequential-edit'),
+    }) %}
+{% endif %}
+
+
 <div class="field">
     <div class="heading">
         <label>{{ 'Activate sequential editing on' |t('sequential-edit') }}:</label>

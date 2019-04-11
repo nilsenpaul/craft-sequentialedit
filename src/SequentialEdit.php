@@ -126,12 +126,14 @@ class SequentialEdit extends Plugin
     protected function settingsHtml(): string
     {
         $commercePlugin = Craft::$app->getPlugins()->getPlugin('commerce');
+        $calendarPlugin = Craft::$app->getPlugins()->getPlugin('calendar');
 
         return Craft::$app->view->renderTemplate(
             'sequential-edit/settings',
             [
                 'settings' => $this->getSettings(),
                 'includeCommerce' => $commercePlugin !== null,
+                'includeCalendar' => $calendarPlugin !== null,
             ]
         );
     }

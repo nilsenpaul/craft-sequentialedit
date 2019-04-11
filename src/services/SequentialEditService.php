@@ -104,10 +104,47 @@ class SequentialEditService extends Component
             $destroyQueue = false;
             if (empty($segments)) {
                 $destroyQueue = true;
-            } elseif ($segments[0] === 'commerce' && !isset($segments[1])) {
-                $destroyQueue = true;
+            } elseif ($segments[0] === 'commerce') {
+                if (!isset($segments[1])) {
+                    $destroyQueue = true;
+                }
+
+                $controller = $segments[1];
+                switch ($controller) {
+                    case 'products':
+                    case 'subscriptions':
+                        if (!isset($segments[3])) {
+                            $destroyQueue = true;
+                        } else {
+                            list($elementId) = explode('-', $segments[3]);
+                            
+                            if (!((Int)$elementId > 0)) {
+                                $destroyQueue = true;
+                            }
+                        }
+                        break;
+                }
+            } elseif ($segments[0] === 'calendar') {
+                if (!isset($segments[1])) {
+                    $destroyQueue = true;
+                }
+
+                $controller = $segments[1];
+                switch ($controller) {
+                    case 'events':
+                        if (!isset($segments[2])) {
+                            $destroyQueue = true;
+                        } else {
+                            $elementId = $segments[2];
+                            
+                            if (!((Int)$elementId > 0)) {
+                                $destroyQueue = true;
+                            }
+                        }
+                        break;
+                }
             } else {
-                $controller = $segments[0] === 'commerce' ? $segments[1] : $segments[0];
+                $controller = $segments[0];
 
                 switch ($controller) {
                     case 'entries':
@@ -122,19 +159,6 @@ class SequentialEditService extends Component
                             }
                         }
                         break;
-                    case 'products':
-                    case 'subscriptions':
-                        if (!isset($segments[3])) {
-                            $destroyQueue = true;
-                        } else {
-                            list($elementId) = explode('-', $segments[3]);
-                            
-                            if (!((Int)$elementId > 0)) {
-                                $destroyQueue = true;
-                            }
-                        }
-                        break;
-
                     case 'users':
                         if (!isset($segments[1])) {
                             $destroyQueue = true;
