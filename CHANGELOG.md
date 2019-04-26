@@ -1,5 +1,9 @@
 # Sequential Edit Changelog
 
+## 1.0.7.1 - 2019-04-12
+### Fixed
+- Fixed a bug that occured when using Craft Commerce with Sequential Edit
+
 ## 1.0.7 - 2019-04-12
 ### Added
 - Added support for editing Solspace Calendar events in sequence
