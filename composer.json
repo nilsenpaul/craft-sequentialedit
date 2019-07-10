@@ -2,7 +2,7 @@
     "name": "nilsenpaul/craft-sequentialedit",
     "description": "This plugin lets you edit multiple elements (entries, assets, categories ...) in sequence, without being sent back to the index page each time you save your changes.",
     "type": "craft-plugin",
-    "version": "1.0.7.1",
+    "version": "1.0.8",
     "keywords": [
         "craft",
         "cms",
@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0-RC1"
+        "craftcms/cms": "^3.0.0"
     },
     "autoload": {
         "psr-4": {

@@ -22,8 +22,10 @@ use craft\db\Query;
 use craft\elements\Category;
 use craft\elements\Entry;
 use craft\elements\User;
+use craft\events\DraftEvent;
 use craft\events\ModelEvent;
 use craft\events\RegisterElementActionsEvent;
+use craft\services\Drafts;
 use craft\services\Plugins;
 
 use yii\base\Event;
@@ -63,11 +65,18 @@ class SequentialEdit extends Plugin
                 });
 
                 // Listen to afterSave event, redirect user
-                Event::on($elementClassName, $elementClassName::EVENT_AFTER_SAVE, function(ModelEvent $event) use($elementClassName) {
-                    if (!$event->isNew) {
-                        $this->general->sendToNextQueuedItem($event, $elementClassName);
-                    }
-                });
+		if (version_compare(Craft::$app->version, '3.2.0') >= 0 && $elementClassName == Entry::className()) {
+                	Event::on(Drafts::className(), Drafts::EVENT_AFTER_APPLY_DRAFT, function (DraftEvent $event) {
+                        	$this->general->sendToNextQueuedItem(null, $event->source->className(), $event->source);
+                	});
+                } else {
+                	// Listen to afterSave event, redirect user
+                     	Event::on($elementClassName, $elementClassName::EVENT_AFTER_SAVE, function(ModelEvent $event) use($elementClassName) {
+                        	if (!$event->isNew) {
+                             		$this->general->sendToNextQueuedItem($event, $elementClassName);
+                         	}
+                     	});
+                }
             }
 
             // Listen for remaining IDS 

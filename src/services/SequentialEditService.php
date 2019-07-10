@@ -74,19 +74,27 @@ class SequentialEditService extends Component
      * @param String $type
      * @return void
      */
-    public static function sendToNextQueuedItem(ModelEvent $event, $type)
+    public static function sendToNextQueuedItem(ModelEvent $event = null, $type, $element = null)
     {
-        $remainingItems = self::getRemainingItemQuery($event->sender->siteId, $event->sender->id, $type);
+	if ($event) {
+        	$element = $event->sender;
+        }
+ 
+        if (!$element) {
+        	return false;
+        }  
+                 
+        $remainingItems = self::getRemainingItemQuery($element->siteId, $element->id, $type);
         $nextRemainingItem = $remainingItems->one();
 
         if ($nextRemainingItem) {
-            $element = Craft::$app->elements->getElementById($nextRemainingItem->elementId, null, $nextRemainingItem->siteId);
+            $nextElement = Craft::$app->elements->getElementById($nextRemainingItem->elementId, null, $nextRemainingItem->siteId);
 
             // Delete the queued item
             $nextRemainingItem->delete();
 
-            if ($element) {
-                return Craft::$app->response->redirect($element->cpEditUrl)->send();
+            if ($nextElement) {
+                return Craft::$app->response->redirect($nextElement->cpEditUrl)->send();
                 exit;
             }
         }
