@@ -64,19 +64,19 @@ class SequentialEdit extends Plugin
                     array_splice($event->actions, 2, 0, SequentialEditAction::class);
                 });
 
-                // Listen to afterSave event, redirect user
-		if (version_compare(Craft::$app->version, '3.2.0') >= 0 && $elementClassName == Entry::className()) {
+                // For Craft versions supporting drafts, listen to the afterApplyDraft event
+        		if (version_compare(Craft::$app->version, '3.2.0') >= 0 && $elementClassName == Entry::className()) {
                 	Event::on(Drafts::className(), Drafts::EVENT_AFTER_APPLY_DRAFT, function (DraftEvent $event) {
                         	$this->general->sendToNextQueuedItem(null, $event->source->className(), $event->source);
                 	});
-                } else {
-                	// Listen to afterSave event, redirect user
-                     	Event::on($elementClassName, $elementClassName::EVENT_AFTER_SAVE, function(ModelEvent $event) use($elementClassName) {
-                        	if (!$event->isNew) {
-                             		$this->general->sendToNextQueuedItem($event, $elementClassName);
-                         	}
-                     	});
                 }
+
+                // Listen to afterSave event, redirect user
+                Event::on($elementClassName, $elementClassName::EVENT_AFTER_SAVE, function(ModelEvent $event) use($elementClassName) {
+                    if (!$event->isNew) {
+                            $this->general->sendToNextQueuedItem($event, $elementClassName);
+                    }
+                });
             }
 
             // Listen for remaining IDS 

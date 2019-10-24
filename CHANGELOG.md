@@ -1,5 +1,9 @@
 # Sequential Edit Changelog
 
+## 1.0.8.1 - 2019-10-24
+### Fixed
+- Fixed a bug that prevented Sequential Edit from working if an entry without a draft was saved
+
 ## 1.0.7.1 - 2019-04-12
 ### Fixed
 - Fixed a bug that occured when using Craft Commerce with Sequential Edit
