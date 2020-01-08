@@ -135,21 +135,21 @@ class SequentialEditService extends Component
             } elseif ($segments[0] === 'calendar') {
                 if (!isset($segments[1])) {
                     $destroyQueue = true;
-                }
-
-                $controller = $segments[1];
-                switch ($controller) {
-                    case 'events':
-                        if (!isset($segments[2])) {
-                            $destroyQueue = true;
-                        } else {
-                            $elementId = $segments[2];
-                            
-                            if (!((Int)$elementId > 0)) {
+                } else {
+                    $controller = $segments[1];
+                    switch ($controller) {
+                        case 'events':
+                            if (!isset($segments[2])) {
                                 $destroyQueue = true;
+                            } else {
+                                $elementId = $segments[2];
+                                
+                                if (!((Int)$elementId > 0)) {
+                                    $destroyQueue = true;
+                                }
                             }
-                        }
-                        break;
+                            break;
+                    }
                 }
             } else {
                 $controller = $segments[0];
