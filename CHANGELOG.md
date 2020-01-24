@@ -1,5 +1,9 @@
 # Sequential Edit Changelog
 
+## 1.0.8.2 - 2020-01-24
+### Fixed
+- Fixed a bug that could throw an undefined offset error when used with Calendar
+
 ## 1.0.8.1 - 2019-10-24
 ### Fixed
 - Fixed a bug that prevented Sequential Edit from working if an entry without a draft was saved
