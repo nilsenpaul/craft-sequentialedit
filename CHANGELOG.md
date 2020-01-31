@@ -1,5 +1,9 @@
 # Sequential Edit Changelog
 
+## 1.0.8.3 - 2020-01-31
+### Added
+- When using Craft >= 3.4, add the possibility to sequentially edit assets
+
 ## 1.0.8.2 - 2020-01-24
 ### Fixed
 - Fixed a bug that could throw an undefined offset error when used with Calendar
