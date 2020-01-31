@@ -22,5 +22,6 @@ class Settings extends Model
         'craft\elements\Entry',
         'craft\elements\Category',
         'craft\elements\User',
+        'craft\elements\Asset',
     ];
 }

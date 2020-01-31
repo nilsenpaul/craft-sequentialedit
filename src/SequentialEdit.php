@@ -105,6 +105,10 @@ class SequentialEdit extends Plugin
                 return $this->displayHook('user', $context);
             });
 
+            Craft::$app->view->hook('cp.assets.edit.details', function(array &$context) {
+                return $this->displayHook('asset', $context);
+            });
+
             // Remove this session's queued item if this is not an edit action of any kind
             if ($request->isCpRequest && !$request->isAjax && !$requestContainsActionTrigger) {
                 $this->general->destroyQueueOnAnythingButEdits();
@@ -149,7 +153,7 @@ class SequentialEdit extends Plugin
 
     protected function displayHook($type, $context)
     {
-        $element = $context[$type];
+        $element = $context['element'];
 
         if ($element) {
             switch ($type) {
@@ -164,6 +168,10 @@ class SequentialEdit extends Plugin
                 case 'user':
                     $elementType = 'craft\elements\User';
                     $tString = '{n, plural, =1{user} other{users}}';
+                    break;
+                case 'asset':
+                    $elementType = 'craft\elements\Asset';
+                    $tString = '{n, plural, =1{asset} other{assets}}';
                     break;
             }
 

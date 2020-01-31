@@ -157,6 +157,7 @@ class SequentialEditService extends Component
                 switch ($controller) {
                     case 'entries':
                     case 'categories':
+                    case 'assets':
                         if (!isset($segments[2])) {
                             $destroyQueue = true;
                         } else {
