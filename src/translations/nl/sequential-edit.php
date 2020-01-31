@@ -7,6 +7,7 @@ return [
     'Entries' => 'Inhoudsitems',
     'Categories' => 'Categorieën',
     'Users' => 'Gebruikers',
+    'Assets' => 'Bestanden',
     'Commerce products' => 'Commerce producten',
     'Commerce subscriptions' => 'Commerce subscriptions',
     'Remaining' => 'In wachtrij',
