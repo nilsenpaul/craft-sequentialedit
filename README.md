@@ -2,7 +2,7 @@
 
 This plugin lets you edit multiple elements (entries, categories, assets (if Craft >= 3.4), Commerce products, Commerce subscriptions and Solspace Calendar Events) in sequence, without being sent back to the index page each time you save your changes.
 
-![Screenvid](resources/sequential-edit.gif)
+![Screenvid](resources/sequential-edit-34.gif)
 
 ## Requirements
 
