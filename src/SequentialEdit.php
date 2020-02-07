@@ -153,7 +153,7 @@ class SequentialEdit extends Plugin
 
     protected function displayHook($type, $context)
     {
-        $element = $context['element'];
+        $element = $context['element'] ?? null;
 
         if ($element) {
             switch ($type) {

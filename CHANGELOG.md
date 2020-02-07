@@ -1,5 +1,9 @@
 # Sequential Edit Changelog
 
+## 1.0.8.4 - 2020-01-31
+### Fixed
+- Fixed a PHP notice on the "My account" page
+
 ## 1.0.8.3 - 2020-01-31
 ### Added
 - When using Craft >= 3.4, add the possibility to sequentially edit assets
