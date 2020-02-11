@@ -1,5 +1,9 @@
 # Sequential Edit Changelog
 
+## 1.0.8.5 - 2020-02-11
+### Changed
+- Changed plugin logo
+
 ## 1.0.8.4 - 2020-01-31
 ### Fixed
 - Fixed a PHP notice on the "My account" page
