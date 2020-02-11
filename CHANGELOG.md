@@ -1,5 +1,9 @@
 # Sequential Edit Changelog
 
+## 1.0.8.6 - 2020-02-11
+### Fixed
+- Fixed a bug when visiting a category detail page 
+
 ## 1.0.8.5 - 2020-02-11
 ### Changed
 - Changed plugin logo
